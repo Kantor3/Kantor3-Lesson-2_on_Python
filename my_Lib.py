@@ -12,7 +12,7 @@
 def CheckExit(sign='YyНн', txt_req='Продолжить? ("Y" - ДА) -> '):
 
     if isinstance(sign, str):
-        out = not (f'-{input(txt_req)}' in [f'-{el}' for el in sign])
+        out = not (f'-{input(txt_req)}' in map(lambda el: f'-{el}', sign))
     else:
         out = sign is None or isinstance(sign, bool) and sign
 
@@ -22,10 +22,12 @@ def CheckExit(sign='YyНн', txt_req='Продолжить? ("Y" - ДА) -> '):
     return False
 
 
-# Организация ввода и возврат целого числа (в т.ч. отрицательное)
+# Организация ввода и возврат целого или вещественного числа (в т.ч. отрицательное)
 # в заданном диапазоне или выход. C полным контролем корректности
 def GetInputNumber(*rang, txt='Введите число', end=None):
-    borders = '' if len(rang) == 0 else f' ({rang[0]} ... {rang[1]}).'
+    borders = '' if len(rang) == 0 else \
+              f' ({rang[0]}, ... )' if len(rang) == 1 else \
+              f' ({rang[0]}, ... {rang[1]}).'
     txt_input = f'{txt}{borders}'
     frm, to = (rang + (None, None))[:2]
 
@@ -37,9 +39,12 @@ def GetInputNumber(*rang, txt='Введите число', end=None):
         try:
             numb = int(numb)
         except ValueError:
-            print(f'Введенная строка "{numb}" не является числом. ', end='')
-            txt_input = 'Повторите ввод.'
-            continue
+            try:
+                numb = float(numb)
+            except ValueError:
+                print(f'Введенная строка "{numb}" не является числом. ', end='')
+                txt_input = 'Повторите ввод.'
+                continue
 
         if not (frm is None) and numb < frm or not (to is None) and numb > to:
             print(f'Введенное число {numb} должно быть в диапазоне ({rang[0]} ... {rang[1]}) -> ', end='')
