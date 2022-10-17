@@ -12,6 +12,5 @@ while True:
     number = My.GetInputNumber(1, txt='\nВведите число членов приближения', end='-')
     if My.CheckExit(number):
         break
-    sequence = []
     dic_exp = dict([(i+1, round((1 + 1/(i+1)) ** (i+1), 3)) for i in range(number)])
     print(f'N = {number} -> {dic_exp}')

@@ -12,10 +12,10 @@ from functools import reduce
 
 def Create_FilePos(max_count):
     pos_rnd = set(el for el in list(random.randint(1, max_count + 1) for _ in range(max_count + 1)))
-    f = open('file.txt', 'w')
-    f.close()
-    with open('file.txt', 'a') as f:
-        f.writelines(f'{el}\n' for el in pos_rnd)
+    fil = open('file.txt', 'w')
+    fil.close()
+    with open('file.txt', 'a') as fil:
+        fil.writelines(f'{el}\n' for el in pos_rnd)
     return
 
 
