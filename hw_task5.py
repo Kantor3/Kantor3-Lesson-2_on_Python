@@ -20,3 +20,4 @@ while True:
     print(f'Перемешанный список -> {lst}')
     if My.CheckExit():
         break
+
